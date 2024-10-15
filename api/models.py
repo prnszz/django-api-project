@@ -13,7 +13,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     user_id = models.CharField(max_length=20, unique=True)
-    nickname = models.CharField(max_length=30, blank=True)
+    nickname = models.CharField(max_length=30, blank=True, default='')
     comment = models.CharField(max_length=100, blank=True)
 
     objects = UserManager()
