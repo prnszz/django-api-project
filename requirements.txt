@@ -1,4 +1,5 @@
 Django
 gunicorn
 djangorestframework
-psychopg2-binary
+psycopg2
+wheel
