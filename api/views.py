@@ -75,3 +75,10 @@ def close_account(request):
     user = request.user
     user.delete()
     return Response({"message": "Account and user successfully removed"}, status=status.HTTP_200_OK)
+
+
+
+from django.http import JsonResponse
+
+def test_view(request):
+    return JsonResponse({"message": "API is working"})
