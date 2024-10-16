@@ -55,6 +55,10 @@ def signup(request):
 @authentication_classes([BasicAuthentication])
 @permission_classes([IsAuthenticated])
 def user_detail(request, user_id):
+
+    if not request.user.is_authenticated:
+        return Response({"message": "Authentication Failed"}, status=status.HTTP_401_UNAUTHORIZED)
+    
     try:
         user = User.objects.get(user_id=user_id)
     except User.DoesNotExist:
