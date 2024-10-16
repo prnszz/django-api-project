@@ -79,12 +79,16 @@ WSGI_APPLICATION = 'your_project.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
-        conn_max_age=600,
-        conn_health_checks=True,
-        ssl_require=True,
+        default=os.getenv('DATABASE_URL', 'postgres://default:NLMcUf04xWXb@ep-yellow-band-a4oohwot.us-east-1.aws.neon.tech:5432/verceldb')
     )
 }
+
+# 为默认数据库指定引擎
+if 'ENGINE' not in DATABASES['default']:
+    DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+
+# 如果你需要开启 SSL 连接（对于某些托管平台或数据库供应商），可以添加以下设置：
+DATABASES['default']['OPTIONS'] = {'sslmode': 'require'}
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
