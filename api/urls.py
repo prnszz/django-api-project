@@ -10,5 +10,5 @@ urlpatterns = [
     path('close/', views.close_account, name='close_account'),
     path('close', views.close_account, name='close_account'),
     path('test/', views.test_view, name='test_view'),
-
+    path('connection', views.test_db, name='test_db'),
 ]

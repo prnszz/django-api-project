@@ -114,3 +114,16 @@ def close_account(request):
 
 def test_view(request):
     return JsonResponse({"message": "API is working"})
+
+
+from django.http import JsonResponse
+from django.db import connection
+
+def test_db(request):
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+            row = cursor.fetchone()
+        return JsonResponse({"status": "Database connection successful", "result": row[0]})
+    except Exception as e:
+        return JsonResponse({"status": "Database connection failed", "error": str(e)})
