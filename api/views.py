@@ -53,7 +53,7 @@ def signup(request):
 
 @api_view(['GET', 'PATCH'])
 @authentication_classes([BasicAuthentication])
-@permission_classes([IsAuthenticated])
+@permission_classes([])
 def user_detail(request, user_id):
 
     if not request.user.is_authenticated:
@@ -113,7 +113,7 @@ def user_detail(request, user_id):
 
 @api_view(['POST'])
 @authentication_classes([BasicAuthentication])
-@permission_classes([IsAuthenticated])
+@permission_classes([])
 def close_account(request):
     if not request.user.is_authenticated:
         return Response({"message": "Authentication Failed"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -155,12 +155,3 @@ def test_db(request):
 
 
 
-from rest_framework.views import exception_handler
-
-def custom_exception_handler(exc, context):
-    response = exception_handler(exc, context)
-
-    if response is not None and response.status_code == 401:
-        response.data = {"message": "Authentication Failed"}
-
-    return response
