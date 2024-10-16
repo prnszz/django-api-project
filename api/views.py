@@ -93,6 +93,9 @@ def user_detail(request, user_id):
                 return Response({"message": "User updation failed", "cause": "comment should be a string with less than 100 characters"}, status=status.HTTP_400_BAD_REQUEST)
             user.comment = comment
 
+        else:
+            return Response({"message": "User updation failed"}, status=status.HTTP_401_UNAUTHORIZED)
+
         user.save()
         return Response({
             "message": "User successfully updated",
@@ -108,8 +111,11 @@ def user_detail(request, user_id):
 def close_account(request):
     try:
         user = request.user
-        user.delete()
-        return Response({"message": "Account and user successfully removed"}, status=status.HTTP_200_OK)
+        if user.is_authenticated:
+            user.delete()
+            return Response({"message": "Account and user successfully removed"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "Authentication Failed"}, status=status.HTTP_401_UNAUTHORIZED)
     except Exception as e:
         logger.error(f"Unexpected error in close_account: {str(e)}", exc_info=True)
         return Response({"message": "Account deletion failed", "cause": "An unexpected error occurred"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

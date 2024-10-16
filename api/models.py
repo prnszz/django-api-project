@@ -108,5 +108,8 @@ def user_detail(request, user_id):
 @permission_classes([IsAuthenticated])
 def close_account(request):
     user = request.user
-    user.delete()
-    return Response({"message": "Account and user successfully removed"}, status=status.HTTP_200_OK)
+    if user.is_authenticated:
+        user.delete()
+        return Response({"message": "Account and user successfully removed"}, status=status.HTTP_200_OK)
+    else:
+        return Response({"message": "Authentication Failed"}, status=status.HTTP_401_UNAUTHORIZED)
