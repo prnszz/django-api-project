@@ -138,3 +138,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
     'DEFAULT_PERMISSION_CLASSES': [],
 }
+
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'your_project.views.custom_exception_handler',
+}
