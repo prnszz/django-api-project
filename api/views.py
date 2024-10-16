@@ -120,10 +120,18 @@ from django.http import JsonResponse
 from django.db import connection
 
 def test_db(request):
+    response = {
+        "status": "Checking database connection",
+        "database_config": str(settings.DATABASES['default']),
+        "error": None
+    }
     try:
         with connection.cursor() as cursor:
             cursor.execute("SELECT 1")
             row = cursor.fetchone()
-        return JsonResponse({"status": "Database connection successful", "result": row[0]})
+        response["status"] = "Database connection successful"
+        response["result"] = row[0]
     except Exception as e:
-        return JsonResponse({"status": "Database connection failed", "error": str(e)})
+        response["status"] = "Database connection failed"
+        response["error"] = str(e)
+    return JsonResponse(response)

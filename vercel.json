@@ -9,6 +9,7 @@
       "dest": "your_project/wsgi.py"
     }],
     "env": {
-    "DJANGO_SETTINGS_MODULE": "your_project.settings"
+    "DJANGO_SETTINGS_MODULE": "your_project.settings",
+    "DATABASE_URL": "postgres://default:NLMcUf04xWXb@ep-yellow-band-a4oohwot.us-east-1.aws.neon.tech:5432/verceldb"
   }
   }
