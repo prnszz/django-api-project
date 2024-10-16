@@ -80,6 +80,8 @@ def user_detail(request, user_id):
 
         nickname = request.data.get('nickname')
         comment = request.data.get('comment')
+        if nickname is None:
+            nickname = user.user_id
 
         if 'user_id' in request.data or 'password' in request.data:
             return Response({"message": "User updation failed", "cause": "not updatable user_id and password"}, status=status.HTTP_400_BAD_REQUEST)
@@ -113,6 +115,8 @@ def user_detail(request, user_id):
 @authentication_classes([BasicAuthentication])
 @permission_classes([IsAuthenticated])
 def close_account(request):
+    if not request.user.is_authenticated:
+        return Response({"message": "Authentication Failed"}, status=status.HTTP_401_UNAUTHORIZED)
     try:
         user = request.user
         if user.is_authenticated:
@@ -123,6 +127,8 @@ def close_account(request):
     except Exception as e:
         logger.error(f"Unexpected error in close_account: {str(e)}", exc_info=True)
         return Response({"message": "Account deletion failed", "cause": "An unexpected error occurred"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    # return Response({"message": "Account deletion failed"}, status=status.HTTP_401_UNAUTHORIZED)
 
 def test_view(request):
     return JsonResponse({"message": "API is working"})
