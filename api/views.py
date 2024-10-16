@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.db import IntegrityError
+from django.http import JsonResponse
 from .models import User
 from .serializers import UserSerializer
 import re
