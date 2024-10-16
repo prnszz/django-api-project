@@ -6,7 +6,9 @@ from rest_framework.response import Response
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.db import IntegrityError
+from django.conf import settings
 from django.http import JsonResponse
+from django.db import connection
 from .models import User
 from .serializers import UserSerializer
 import re
@@ -116,8 +118,7 @@ def test_view(request):
     return JsonResponse({"message": "API is working"})
 
 
-from django.http import JsonResponse
-from django.db import connection
+
 
 def test_db(request):
     response = {
